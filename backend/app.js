@@ -19,7 +19,7 @@ const api = process.env.API_URL;
 app.use(express.json()); // means we can receive json data from the client
 app.use(morgan("dev")); // log every request to the console
 app.use(cors()); // allow cross origin resource sharing
-app.opotions("*", cors()); // this means we can access the api from any origin
+app.options("*", cors()); // this means we can access the api from any origin
 app.use(`${api}/product`, productsRoutes);
 app.use(`${api}/order`, ordersRoutes);
 app.use(`${api}/user`, usersRoutes);
