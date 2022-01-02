@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cors = require("cors");
 require("dotenv/config");
 
 // Routes
@@ -17,6 +18,8 @@ const api = process.env.API_URL;
 // middleware
 app.use(express.json()); // means we can receive json data from the client
 app.use(morgan("dev")); // log every request to the console
+app.use(cors()); // allow cross origin resource sharing
+app.opotions("*", cors()); // this means we can access the api from any origin
 app.use(`${api}/product`, productsRoutes);
 app.use(`${api}/order`, ordersRoutes);
 app.use(`${api}/user`, usersRoutes);

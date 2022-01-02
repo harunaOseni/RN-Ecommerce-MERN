@@ -14,4 +14,4 @@ router.get("/", async (req, res) => {
   res.send(userList);
 });
 
-module.export = router;
+module.exports = router;
