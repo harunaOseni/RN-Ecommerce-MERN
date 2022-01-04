@@ -4,17 +4,47 @@ const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 
 router.get(`/`, async (req, res) => {
-  const productList = await Product.find();
-  if (productList.length > 0) {
-    res.status(200).json(productList);
+  //get product based on category
+  const filter = {};
+  if (req.query.categories) {
+    filter = { category: req.query.categories.split(",") };
+  }
+
+  const productList = await Product.find(filter).populate("category");
+
+  if (!productList) {
+    res.status(500).json({ success: false });
   } else {
-    res.status(404).json({ message: "No products found" });
+    res.status(200).json(productList);
   }
 });
 
 router.get(`/:id`, async (req, res) => {
   const product = await Product.findById(req.params.id).populate("category");
 
+  if (!product) {
+    res.status(404).send("Product not found");
+  } else {
+    res.status(200).send(product);
+  }
+});
+
+router.get("/get/count", async (req, res) => {
+  const productCount = await Product.find().countDocuments();
+  res.status(200).json({
+    count: productCount,
+  });
+});
+
+router.get("/get/featured/:count", async (req, res) => {
+  const featuredProducts = await Product.find({ isFeatured: true }).limit(
+    Number(req.params.count)
+  );
+  res.status(200).json(featuredProducts);
+});
+
+router.delete(`/:id`, async (req, res) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
   if (!product) {
     res.status(404).send("Product not found");
   } else {
@@ -49,6 +79,7 @@ router.put("/:id", (req, res) => {
       res.status(500).json({
         success: false,
         error: err,
+        message: "Error updating product",
       });
     });
 });
