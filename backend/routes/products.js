@@ -14,6 +14,43 @@ router.get(`/`, async (req, res) => {
 
 router.get(`/:id`, async (req, res) => {
   const product = await Product.findById(req.params.id).populate("category");
+
+  if (!product) {
+    res.status(404).send("Product not found");
+  } else {
+    res.status(200).send(product);
+  }
+});
+
+router.put("/:id", (req, res) => {
+  Product.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    description: req.body.description,
+    richDescription: req.body.richDescription,
+    image: req.body.image,
+    brand: req.body.brand,
+    price: req.body.price,
+    category: req.body.category,
+    countInStock: req.body.countInStock,
+    rating: req.body.rating,
+    numReviews: req.body.numReviews,
+    isFeatured: req.body.isFeatured,
+  })
+    .then((product) => {
+      if (!product) {
+        res.status(404).json({
+          success: false,
+        });
+      }
+
+      res.status(200).json(product);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        error: err,
+      });
+    });
 });
 
 router.post(`/`, (req, res) => {
