@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Product } = require("../models/product");
+const { Category } = require("../models/category");
 
 router.get(`/`, async (req, res) => {
   const productList = await Product.find();
@@ -11,25 +12,43 @@ router.get(`/`, async (req, res) => {
   }
 });
 
-router.post(`/`, (req, res) => {
-  const product = new Product({
-    name: req.body.name,
-    image: req.body.image,
-    countInStock: req.body.countInStock,
-  });
+router.get(`/:id`, async (req, res) => {
+  const product = await Product.findById(req.params.id).populate("category");
+});
 
-  product
-    .save()
-    .then((result) => {
-      res.status(201).json(result);
-    })
-    .catch((error) => {
-      res.status(500).json({
-        message: "Error saving product",
-        error: error,
-        success: false,
+router.post(`/`, (req, res) => {
+  Category.findById(req.body.category).then((category) => {
+    if (!category) {
+      res.status(404).json({ message: "Category not found" });
+    } else {
+      const product = new Product({
+        name: req.body.name,
+        description: req.body.description,
+        richDescription: req.body.richDescription,
+        image: req.body.image,
+        brand: req.body.brand,
+        price: req.body.price,
+        category: req.body.category,
+        countInStock: req.body.countInStock,
+        rating: req.body.rating,
+        numReviews: req.body.numReviews,
+        isFeatured: req.body.isFeatured,
       });
-    });
+
+      product
+        .save()
+        .then((result) => {
+          res.status(201).json(result);
+        })
+        .catch((error) => {
+          res.status(500).json({
+            message: "Error saving product",
+            error: error,
+            success: false,
+          });
+        });
+    }
+  });
 });
 
 //export router module
