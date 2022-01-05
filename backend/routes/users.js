@@ -2,6 +2,8 @@ const { User } = require("../models/user");
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv/config");
 
 router.get("/", async (req, res) => {
   const userList = await User.find();
@@ -55,6 +57,34 @@ router.post("/", (req, res) => {
         message: "Error while saving user",
       });
     });
+});
+
+router.post("/login", (req, res) => {
+  //login user
+  User.findOne({ email: req.body.email }).then((user) => {
+    if (user) {
+      if (bcrypt.compareSync(req.body.password, user.passwordHash)) {
+        // json web tokens are used to authenticate users
+        // they are used to verify that the user is who they say they are and to prevent users from accessing the system without being authenticated
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+        res.status(200).send({
+          user: user.email,
+          success: true,
+          token: token,
+        });
+      } else {
+        res.status(401).json({
+          success: false,
+          message: "Wrong password",
+        });
+      }
+    } else {
+      res.status(401).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+  });
 });
 
 module.exports = router;
