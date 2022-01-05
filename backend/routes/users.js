@@ -66,7 +66,10 @@ router.post("/login", (req, res) => {
       if (bcrypt.compareSync(req.body.password, user.passwordHash)) {
         // json web tokens are used to authenticate users
         // they are used to verify that the user is who they say they are and to prevent users from accessing the system without being authenticated
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+        const token = jwt.sign(
+          { userId: user.id, isAdmin: user.isAdmin },
+          process.env.JWT_SECRET
+        );
         res.status(200).send({
           user: user.email,
           success: true,
