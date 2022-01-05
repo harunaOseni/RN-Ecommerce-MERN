@@ -31,6 +31,30 @@ router.get("/:id", (req, res) => {
     });
 });
 
+// total count of users in db
+router.get("/get/count", (req, res) => {
+  User.find()
+    .countDocuments()
+    .then((count) => {
+      res.status(200).json({
+        count: count,
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    });
+});
+
+// router.get("/get/count", async (req, res) => {
+//   const productCount = await Product.find().countDocuments();
+//   res.status(200).json({
+//     count: productCount,
+//   });
+// });
+
 router.post("/", (req, res) => {
   const newUser = new User({
     name: req.body.name,
