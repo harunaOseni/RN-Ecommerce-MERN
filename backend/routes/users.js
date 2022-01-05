@@ -31,7 +31,6 @@ router.get("/:id", (req, res) => {
     });
 });
 
-// total count of users in db
 router.get("/get/count", (req, res) => {
   User.find()
     .countDocuments()
@@ -47,13 +46,6 @@ router.get("/get/count", (req, res) => {
       });
     });
 });
-
-// router.get("/get/count", async (req, res) => {
-//   const productCount = await Product.find().countDocuments();
-//   res.status(200).json({
-//     count: productCount,
-//   });
-// });
 
 router.post("/", (req, res) => {
   const newUser = new User({
@@ -112,6 +104,26 @@ router.post("/login", (req, res) => {
       });
     }
   });
+});
+
+router.delete("/:id", (req, res) => {
+  User.findByIdAndDelete(req.params.id)
+    .then((user) => {
+      if (!user) {
+        res.status(404).json({
+          success: false,
+        });
+      }
+
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        error: err,
+        message: "Error deleting user",
+      });
+    });
 });
 
 module.exports = router;
