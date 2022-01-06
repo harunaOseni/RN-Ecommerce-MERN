@@ -1,5 +1,6 @@
 const { Order } = require("../models/order");
 const { OrderItem } = require("../models/orderItem");
+const { Product } = require("../models/product");
 const express = require("express");
 const router = express.Router();
 
@@ -43,6 +44,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//get total ecommerce sales using $sum
+router.get("/get/total", async (req, res) => {
+  const totalSales = await Order.aggregate([
+    //aggregate is a mongoose method used to perform aggregation operations on the data in the database
+    {
+      $group: {
+        _id: null,
+        // $group is a mongoose aggregation operator that groups the data in the database based on the specified field and performs the specified operation on the grouped data
+        total: { $sum: "$totalPrice" }, // $sum is a mongoose aggregation operator that sums the data in the specified field and returns the sum
+      },
+    },
+  ]);
+
+  if (!totalSales) {
+    res.status(500).json({
+      success: false,
+    });
+  }
+
+  //return a json without the _id field
+  res.status(200).json(totalSales[0].total);
+});
+
 router.post("/", (req, res) => {
   const orderItemsId = req.body.orderItems.map((orderItem) => {
     let newOrderItem = new OrderItem({
@@ -55,32 +79,51 @@ router.post("/", (req, res) => {
     return newOrderItem._id;
   });
 
-  const newOrder = new Order({
-    orderItems: orderItemsId,
-    shippingAddress1: req.body.shippingAddress1,
-    shippingAddress2: req.body.shippingAddress2,
-    city: req.body.city,
-    zip: req.body.zip,
-    country: req.body.country,
-    phone: req.body.phone,
-    status: req.body.status,
-    totalPrice: req.body.totalPrice,
-    user: req.body.user,
-    dateOrdered: req.body.dateOrdered,
+  //calculate total price of order using orderItemsId
+  const totalPrice = req.body.orderItems.map((orderItem) => {
+    //get product price from product id
+    const product = Product.findById(orderItem.product);
+    // resolve the promise and get the price array
+    return product.then((product) => {
+      return product.price * orderItem.quantity;
+    });
   });
 
-  newOrder
-    .save()
-    .then((order) => {
-      res.status(200).json(order);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        error: err,
-        message: "Error saving order",
-        success: false,
-      });
+  //resolve the promise and get the total price
+  Promise.all(totalPrice).then((totalPrice) => {
+    let total = 0;
+    totalPrice.forEach((price) => {
+      total += price;
     });
+
+    const newOrder = new Order({
+      orderItems: orderItemsId,
+      shippingAddress1: req.body.shippingAddress1,
+      shippingAddress2: req.body.shippingAddress2,
+      city: req.body.city,
+      zip: req.body.zip,
+      country: req.body.country,
+      phone: req.body.phone,
+      status: req.body.status,
+      totalPrice: req.body.totalPrice,
+      user: req.body.user,
+      dateOrdered: req.body.dateOrdered,
+      totalPrice: total,
+    });
+
+    newOrder
+      .save()
+      .then((order) => {
+        res.status(200).json(order);
+      })
+      .catch((err) => {
+        res.status(500).json({
+          error: err,
+          message: "Error saving order",
+          success: false,
+        });
+      });
+  });
 });
 
 router.put("/:id", (req, res) => {
