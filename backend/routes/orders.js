@@ -67,6 +67,52 @@ router.get("/get/total", async (req, res) => {
   res.status(200).json(totalSales[0].total);
 });
 
+//route to get the total number of orders
+router.get("/get/count", async (req, res) => {
+  const orderCount = await Order.find().countDocuments();
+
+  if (!orderCount) {
+    res.status(500).json({
+      success: false,
+    });
+  }
+
+  res.status(200).json({
+    count: orderCount,
+    success: true,
+  });
+});
+
+// route to get history of orders
+router.get("/get/orderhistory/:id", async (req, res) => {
+  const orderHistory = await Order.find({
+    user: req.params.id,
+  })
+    .populate("user")
+    .populate("orderItems")
+    .populate({
+      path: "orderItems",
+      populate: {
+        path: "product",
+        // populate the category field of the product
+        populate: {
+          path: "category",
+        },
+      },
+    })
+    .sort({
+      dateOrdered: -1,
+    });
+
+  if (!orderHistory) {
+    res.status(500).json({
+      success: false,
+    });
+  }
+
+  res.send(orderHistory);
+});
+
 router.post("/", (req, res) => {
   const orderItemsId = req.body.orderItems.map((orderItem) => {
     let newOrderItem = new OrderItem({
