@@ -118,6 +118,22 @@ router.delete("/:id", (req, res) => {
           success: false,
         });
       }
+      OrderItem.deleteMany(
+        {
+          _id: {
+            $in: order.orderItems,
+          },
+        },
+        (err) => {
+          if (err) {
+            res.status(500).json({
+              success: false,
+              error: err,
+              message: "Error deleting order items",
+            });
+          }
+        }
+      );
 
       res.status(200).json({
         success: true,
