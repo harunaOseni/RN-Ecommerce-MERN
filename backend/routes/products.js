@@ -2,6 +2,31 @@ const express = require("express");
 const router = express.Router();
 const { Product } = require("../models/product");
 const { Category } = require("../models/category");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/uploads");
+  },
+  filename: function (req, file, cb) {
+    const fileName = file.originalname.replace(" ", "-");
+    const uniqueSuffix = Date.now();
+    //get the file extension
+    const extension = fileName.slice(fileName.lastIndexOf("."));
+    //validate the file extension
+    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
+    if (!allowedExtensions.includes(extension)) {
+      cb(null, `${fileName}-${uniqueSuffix}${extension}`);
+    } else {
+      res.status(400).json({
+        success: false,
+        message: "Invalid file extension",
+      });
+    }
+  },
+});
+
+const upload = multer({ storage: storage }); // this lines is for uploading files
 
 router.get(`/`, async (req, res) => {
   //get product based on category
@@ -84,16 +109,19 @@ router.put("/:id", (req, res) => {
     });
 });
 
-router.post(`/`, (req, res) => {
+router.post(`/`, upload.single("image"), (req, res) => {
   Category.findById(req.body.category).then((category) => {
     if (!category) {
       res.status(404).json({ message: "Category not found" });
     } else {
+      const fileName = req.file.filename; // this line means that we are getting the file name from the multer middleware
+      const baseUrl =
+        req.protocol + "://" + req.get("host") + "public/uploads/"; // this line means that we are getting the base url from the multer middleware
       const product = new Product({
         name: req.body.name,
         description: req.body.description,
         richDescription: req.body.richDescription,
-        image: req.body.image,
+        image: `${baseUrl}${fileName}`,
         brand: req.body.brand,
         price: req.body.price,
         category: req.body.category,

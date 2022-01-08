@@ -4,6 +4,7 @@ const { Product } = require("../models/product");
 const express = require("express");
 const router = express.Router();
 
+
 router.get("/", async (req, res) => {
   const orderList = await Order.find()
     .populate("user", "name")
