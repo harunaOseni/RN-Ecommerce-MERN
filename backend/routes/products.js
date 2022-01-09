@@ -112,6 +112,12 @@ router.post(`/`, upload.single("image"), (req, res) => {
   Category.findById(req.body.category).then((category) => {
     if (!category) {
       res.status(404).json({ message: "Category not found" });
+    }
+
+    if (!req.file) {
+      res.status(400).json({
+        message: "Error, upload a file",
+      });
     } else {
       const fileName = req.file.filename; // this line means that we are getting the file name from the multer middleware
       const baseUrl =
