@@ -76,12 +76,37 @@ router.delete(`/:id`, async (req, res) => {
   }
 });
 
-router.put("/:id", (req, res) => {
+//route to update a product
+router.put("/:id", upload.single("image"), (req, res) => {
+  //validate category
+  Category.findById(req.body.category, (err, category) => {
+    if (err) {
+      res.status(500).send("Invalid category");
+    }
+  });
+
+  //validate existing product
+  const product = Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(404).send("Product not found");
+  }
+
+  const file = req.file;
+  const fileName = req.file.filename; // this line means that we are getting the file name from the multer middleware
+  const baseUrl = req.protocol + "://" + req.get("host") + "public/uploads/"; // this line means that we are getting the base url from the multer middleware
+  let imageUrl;
+  if (file) {
+    imageUrl = `${baseUrl}${fileName}`;
+  } else {
+    imageurl = product.image;
+  }
+
   Product.findByIdAndUpdate(req.params.id, {
     name: req.body.name,
     description: req.body.description,
     richDescription: req.body.richDescription,
-    image: req.body.image,
+    image: imageUrl,
     brand: req.body.brand,
     price: req.body.price,
     category: req.body.category,
