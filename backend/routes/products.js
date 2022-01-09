@@ -177,5 +177,45 @@ router.post(`/`, upload.single("image"), (req, res) => {
   });
 });
 
+//route to update a products images array
+router.put("/gallery/:id", upload.array("images", 12), (req, res) => {
+  const product = Product.findById(req.params.id);
+
+  if (!product) {
+    res.status(404).send("Product not found");
+  }
+
+  const files = req.files;
+
+  const baseUrl = req.protocol + "://" + req.get("host") + "/public/uploads/"; // this line means that we are getting the base url from the multer middleware
+  let imagesUrl = [];
+
+  if (files) {
+    files.forEach((file) => {
+      imagesUrl.push(`${baseUrl}${file.filename}`);
+    });
+  }
+
+  Product.findByIdAndUpdate(
+    req.params.id,
+    {
+      images: imagesUrl,
+    },
+    {
+      new: true,
+    }
+  )
+    .then((product) => {
+      res.status(200).json(product);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        error: err,
+        message: "Error updating product",
+      });
+    });
+});
+
 //export router module
 module.exports = router;
