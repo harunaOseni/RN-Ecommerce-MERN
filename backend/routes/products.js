@@ -94,7 +94,7 @@ router.put("/:id", upload.single("image"), (req, res) => {
 
   const file = req.file;
   const fileName = req.file.filename; // this line means that we are getting the file name from the multer middleware
-  const baseUrl = req.protocol + "://" + req.get("host") + "public/uploads/"; // this line means that we are getting the base url from the multer middleware
+  const baseUrl = req.protocol + "://" + req.get("host") + "/public/uploads/"; // this line means that we are getting the base url from the multer middleware
   let imageUrl;
   if (file) {
     imageUrl = `${baseUrl}${fileName}`;
@@ -146,7 +146,7 @@ router.post(`/`, upload.single("image"), (req, res) => {
     } else {
       const fileName = req.file.filename; // this line means that we are getting the file name from the multer middleware
       const baseUrl =
-        req.protocol + "://" + req.get("host") + "public/uploads/"; // this line means that we are getting the base url from the multer middleware
+        req.protocol + "://" + req.get("host") + "/public/uploads/"; // this line means that we are getting the base url from the multer middleware
       const product = new Product({
         name: req.body.name,
         description: req.body.description,

@@ -24,6 +24,8 @@ const api = process.env.API_URL;
 app.use(express.json()); // means we can receive json data from the client
 app.use(morgan("dev")); // log every request to the console
 app.use(authJwt()); // authJwt middleware
+//middle ware to allow static files to be served
+app.use("/public/uploads", express.static("public/uploads"));
 // authentication error handling
 app.use(errorHandler);
 
