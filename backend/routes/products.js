@@ -4,9 +4,11 @@ const { Product } = require("../models/product");
 const { Category } = require("../models/category");
 const multer = require("multer");
 
+const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif", ".jfif"];
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/uploads");
+    cb(null, "public/uploads/");
   },
   filename: function (req, file, cb) {
     const fileName = file.originalname.replace(" ", "-");
@@ -14,14 +16,11 @@ const storage = multer.diskStorage({
     //get the file extension
     const extension = fileName.slice(fileName.lastIndexOf("."));
     //validate the file extension
-    const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif"];
-    if (!allowedExtensions.includes(extension)) {
-      cb(null, `${fileName}-${uniqueSuffix}${extension}`);
+
+    if (allowedExtensions.indexOf(extension) < 0) {
+      cb(new Error("Invalid file type"));
     } else {
-      res.status(400).json({
-        success: false,
-        message: "Invalid file extension",
-      });
+      cb(null, `${fileName}-${uniqueSuffix}${extension}`);
     }
   },
 });
