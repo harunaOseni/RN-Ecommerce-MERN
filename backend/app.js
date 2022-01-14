@@ -25,7 +25,7 @@ app.use(express.json()); // means we can receive json data from the client
 app.use(morgan("dev")); // log every request to the console
 app.use(authJwt()); // authJwt middleware
 //middle ware to allow static files to be served
-app.use("/public/uploads", express.static("public/uploads"));
+app.use("/public/uploads", express.static("/public/uploads")); // this means that the public folder can be accessed from the client
 // authentication error handling
 app.use(errorHandler);
 
