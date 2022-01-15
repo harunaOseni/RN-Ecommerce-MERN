@@ -15,7 +15,6 @@ const TodoList = () => {
   const [todos, setTodos] = useState([
     "Board Meeting",
     "Ship New Product",
-    "Ring NASDAQ bell for initial Public Offering for company",
   ]);
 
   //Add Item Method
@@ -34,7 +33,7 @@ const TodoList = () => {
       <Text style={[styles.font, styles.align]}>{title}</Text>
       <ScrollView>
         {todos.map((todo, index) => (
-          <Todo key={index} task={todo} />
+          <Todo key={index} task={todo} index={index} deleteTodo={deleteTodo} />
         ))}
       </ScrollView>
       <View>
