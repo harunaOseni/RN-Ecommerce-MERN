@@ -11,26 +11,45 @@ import Todo from "./Todo";
 
 const TodoList = () => {
   const [title, setTitle] = useState("Todo List");
+  const [text, setText] = useState("");
   const [todos, setTodos] = useState([
     "Board Meeting",
     "Ship New Product",
     "Ring NASDAQ bell for initial Public Offering for company",
   ]);
+
+  //Add Item Method
+  const addTodo = () => {
+    setTodos([...todos, text]);
+    setText("");
+  };
+
+  //Delete Item Method
+  const deleteTodo = (index) => {
+    setTodos(todos.filter((todo, i) => i !== index));
+  };
+
   return (
     <View style={{ width: "80%", marginBottom: 60 }}>
       <Text style={[styles.font, styles.align]}>{title}</Text>
       <ScrollView>
-        <Todo task="Board Meeting" />
-        <Todo task="Ship new feature" />
-        <Todo task="Ring NASDAQ bell for Initial Public Offering for company" />
+        {todos.map((todo, index) => (
+          <Todo key={index} task={todo} />
+        ))}
       </ScrollView>
       <View>
-        <TextInput style={styles.input} />
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setText(text)}
+          value={text}
+        />
       </View>
       <View style={styles.buttonContainer}>
         <Button
-          title="Change Title"
-          onPress={() => setTitle("My List")}
+          title="Add Task"
+          onPress={() => {
+            addTodo();
+          }}
           color="black"
         />
       </View>
