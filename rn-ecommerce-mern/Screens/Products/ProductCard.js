@@ -10,7 +10,7 @@ import {
 
 const { width } = Dimensions.get("window");
 
-const ProductCard = ({ item }) => {
+const ProductCard = ({ item }) => { 
   return (
     <View style={styles.container}>
       <Image
