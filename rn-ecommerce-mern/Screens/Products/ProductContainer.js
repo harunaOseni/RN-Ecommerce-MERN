@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from "react-native";
-import Product from "./Product";
+import ProductList from "./ProductList";
 
 const data = require("../../assets/data/products.json");
 
@@ -19,14 +19,13 @@ const ProductContainer = () => {
 
   return (
     <View>
-      <Text>Product Containe</Text>
       <View>
         <FlatList
-          style={{ marginTop: 100 }}
-          horizontal
+          style={{ marginTop: 50 }}
           data={products}
+          horizontal={false}
           numColumns={2}
-          renderItem={({ item }) => <Product item={item} key={item.id} />}
+          renderItem={({ item }) => <ProductList item={item} key={item.id} />}
           keyExtractor={(item) => item.name}
         />
       </View>
