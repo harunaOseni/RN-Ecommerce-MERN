@@ -21,7 +21,7 @@ const ProductContainer = () => {
     <View>
       <View>
         <FlatList
-          style={{ marginTop: 50 }}
+          style={{ marginTop: 45 }}
           data={products}
           horizontal={false}
           numColumns={2}
