@@ -7,7 +7,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Header />
-      <ProductContainer />
+      <View style={{ marginBottom: 70 }}>
+        <ProductContainer />
+      </View>
       <StatusBar style="auto" />
     </View>
   );
