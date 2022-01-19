@@ -1,13 +1,12 @@
 import React from "react";
 import {
-  Text,
   View,
   StyleSheet,
   Image,
   Button,
   Dimensions,
+  Text,
 } from "react-native";
-import { Container, Header, Icon, Item, Input, Text } from "native-base";
 
 const { width } = Dimensions.get("window");
 
