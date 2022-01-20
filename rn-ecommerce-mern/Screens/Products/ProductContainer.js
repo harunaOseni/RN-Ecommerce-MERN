@@ -65,6 +65,23 @@ const ProductContainer = () => {
         onChangeText={(text) => handleSearch(text)}
         onFocus={openList}
       />
+      {/* Icon for close search bar */}
+
+      {focus ? (
+        <Icon
+          as={<Ionicons name="ios-close" size={20} />}
+          style={{
+            position: "absolute",
+            top: 65,
+            right: 10,
+            zIndex: 1,
+            color: "gray",
+            fontSize: 30,
+          }}
+          onPress={closeList}
+        />
+      ) : null}
+
       {focus ? (
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
