@@ -13,7 +13,7 @@ const SearchedProducts = (props) => {
   const { width } = Dimensions.get("window");
   const { productsFiltered } = props;
   return (
-    <ScrollView style={{ marginTop: 5, marginBottom: 10 }}>
+    <ScrollView style={{ marginTop: 5, marginBottom: 100 }}>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((product) => (
           <TouchableOpacity key={product.id}>

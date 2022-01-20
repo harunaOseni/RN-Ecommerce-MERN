@@ -58,17 +58,8 @@ const ProductContainer = () => {
       <Input
         placeholder="Search"
         variant="filled"
-        width="100%"
         height={50}
-        borderRadpanda
-        style={{
-          position: "relative",
-          top: 90,
-          marginBottom: 100,
-          zIndex: 1,
-          width: "95%",
-          marginLeft: 10,
-        }}
+        borderRadius={10}
         onChangeText={(text) => handleSearch(text)}
         onFocus={openList}
       />
@@ -79,7 +70,7 @@ const ProductContainer = () => {
           as={<Ionicons name="ios-close" size={20} />}
           style={{
             position: "absolute",
-            top: 100,
+            top: 10,
             right: 10,
             zIndex: 1,
             color: "gray",
@@ -92,10 +83,10 @@ const ProductContainer = () => {
       {focus ? (
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
-        <View>
+        <View style={{ marginTop: 10 }}>
           <Banner />
           <FlatList
-            style={{ marginBottom: 500 }}
+            style={{ marginBottom: 590 }}
             data={products}
             horizontal={false}
             numColumns={2}
