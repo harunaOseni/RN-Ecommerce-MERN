@@ -13,7 +13,7 @@ const SearchedProducts = (props) => {
   const { width } = Dimensions.get("window");
   const { productsFiltered } = props;
   return (
-    <ScrollView style={{ marginTop: 30, marginBottom: -60 }}>
+    <ScrollView style={{ marginTop: 5, marginBottom: 10 }}>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((product) => (
           <TouchableOpacity key={product.id}>
@@ -57,7 +57,7 @@ const SearchedProducts = (props) => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    marginTop: 20,
+    marginTop: 5,
     flexDirection: "row",
   },
   line: {
