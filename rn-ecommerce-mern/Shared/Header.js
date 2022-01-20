@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     // marginTop: 25,
     position: "absolute",
     // bottom: 100,
-    top: 25,
+    top: 45,
   },
 });
 

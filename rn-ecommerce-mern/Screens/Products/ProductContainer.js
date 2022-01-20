@@ -56,8 +56,8 @@ const ProductContainer = () => {
         borderRadpanda
         style={{
           position: "relative",
-          top: 55,
-          marginBottom: 15,
+          top: 90,
+          marginBottom: 50,
           zIndex: 1,
           width: "95%",
           marginLeft: 10,
@@ -72,7 +72,7 @@ const ProductContainer = () => {
           as={<Ionicons name="ios-close" size={20} />}
           style={{
             position: "absolute",
-            top: 65,
+            top: 100,
             right: 10,
             zIndex: 1,
             color: "gray",
