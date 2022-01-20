@@ -17,6 +17,7 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
+import Banner from "../../Shared/Banner";
 
 const data = require("../../assets/data/products.json");
 
@@ -57,7 +58,7 @@ const ProductContainer = () => {
         style={{
           position: "relative",
           top: 90,
-          marginBottom: 50,
+          marginBottom: 100,
           zIndex: 1,
           width: "95%",
           marginLeft: 10,
@@ -86,8 +87,9 @@ const ProductContainer = () => {
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
         <View>
+          <Banner/>
           <FlatList
-            style={{ marginTop: 45 }}
+            style={{ marginTop: 10, marginBottom: 500 }}
             data={products}
             horizontal={false}
             numColumns={2}
