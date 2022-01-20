@@ -13,23 +13,29 @@ import {
   Divider,
   Heading,
 } from "native-base";
-import { Ionicons, MaterialIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
 
 const data = require("../../assets/data/products.json");
+const categories = require("../../assets/data/categories.json");
 
 const ProductContainer = () => {
   const [products, setProducts] = useState([]);
   const [productsFiltered, setProductsFiltered] = useState([]);
   const [focus, setFocus] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [active, setActive] = useState();
+  const [initialState, setInitialState] = useState([]);
 
   useEffect(() => {
     setProducts(data);
     setProductsFiltered(data);
     setFocus(false);
+    setCategories(categories);
+    setActive(-1);
+    setInitialState(data);
   }, []); //  [] means run once
 
   const handleSearch = (text) => {
@@ -87,9 +93,9 @@ const ProductContainer = () => {
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
         <View>
-          <Banner/>
+          <Banner />
           <FlatList
-            style={{ marginTop: 10, marginBottom: 500 }}
+            style={{ marginBottom: 500 }}
             data={products}
             horizontal={false}
             numColumns={2}

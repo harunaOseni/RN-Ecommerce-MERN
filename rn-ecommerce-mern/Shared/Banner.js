@@ -10,8 +10,8 @@ const Banner = () => {
   useEffect(() => {
     setBannerData([
       "https://sportshub.cbsistatic.com/i/2021/12/17/90ee0e83-d9f6-4726-8ab9-925872d5ab42/cyberpunk-2077.png",
-      "https://image.api.playstation.com/vulcan/img/cfn/1130723GMRPIhWzGsSAcZs1oN0LS95OAjs_X6q9eMUZC8JyAV5lPVqO1OmfjaH0p6SoO7MRk98adj_2xnaZec1cRLjkNehk8.png",
-      "https://fanatics.frgimages.com/FFImage/thumb.aspx?i=/productimages/_3157000/altimages/ff_3157827alt1_full.jpg&w=900",
+      "https://photos5.appleinsider.com/gallery/46552-90742-macbook-air-january-sale-xl.jpg",
+      "https://cdn.mos.cms.futurecdn.net/KonJYD3ddiZF3E8GHU3MPi.jpg",
     ]);
   }, []);
 
