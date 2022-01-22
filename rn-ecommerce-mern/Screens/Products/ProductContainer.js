@@ -101,7 +101,7 @@ const ProductContainer = () => {
       {focus ? (
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 5 }}>
           <Banner />
           <View>
             <CategoryFilter
@@ -113,7 +113,7 @@ const ProductContainer = () => {
             />
           </View>
           <FlatList
-            style={{ marginBottom: 590 }}
+            style={{ marginBottom: 570 }}
             data={products}
             horizontal={false}
             numColumns={2}

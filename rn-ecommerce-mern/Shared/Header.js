@@ -18,13 +18,13 @@ const Header = () => {
 const styles = StyleSheet.create({
   header: {
     alignItems: "center",
-    marginBottom: 200,
+    marginBottom: 120,
   },
   logo: {
     height: 50,
     width: 50,
     position: "absolute",
-    top: 150,
+    top: 90,
   },
 });
 

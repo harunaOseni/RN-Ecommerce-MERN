@@ -20,7 +20,7 @@ const Banner = () => {
       <View style={styles.container}>
         <View style={styles.swiper}>
           <Swiper
-            style={{ height: 300}}
+            style={{ height: 310}}
             showButtons={false}
             autoplay={true}
             autoplayTimeout={1}
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   swiper: {
     width: width,
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 10,
   },
   imageBanner: {
     height: width / 2,
