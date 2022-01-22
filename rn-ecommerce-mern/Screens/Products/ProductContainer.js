@@ -26,7 +26,7 @@ const ProductContainer = () => {
   const [productsFiltered, setProductsFiltered] = useState([]);
   const [focus, setFocus] = useState(false);
   const [categories, setCategories] = useState([]);
-  const [productsCtg, setProductsCtg] = useState([]);
+  const [productsCtg, setProductsCtg] = useState(data);
   const [active, setActive] = useState();
   const [initialState, setInitialState] = useState([]);
 
@@ -58,14 +58,13 @@ const ProductContainer = () => {
   const handleChangeCtg = (ctg) => {
     {
       ctg === "all"
-        ? [setProductsFiltered(initialState), setActive(true)]
-        : [
-            setProductsFiltered(
-              productsCtg.filter((product) => product._id === ctg)
-            ),
-            setActive(true),
-          ];
+        ? [setProductsCtg(initialState), setActive(true)]
+        : setProductsCtg(
+            products.filter((product) => product.category.$oid === ctg)
+          );
     }
+
+    console.log(productsFiltered);
   };
 
   return (
@@ -113,8 +112,8 @@ const ProductContainer = () => {
             />
           </View>
           <FlatList
-            style={{ marginBottom: 570 }}
-            data={products}
+            style={{ marginBottom: 460 }}
+            data={productsCtg}
             horizontal={false}
             numColumns={2}
             renderItem={({ item }) => <ProductList item={item} key={item.id} />}
