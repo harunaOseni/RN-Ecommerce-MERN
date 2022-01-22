@@ -17,15 +17,16 @@ import { Ionicons } from "@expo/vector-icons";
 import ProductList from "./ProductList";
 import SearchedProducts from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
-
-const data = require("../../assets/data/products.json");
-const categories = require("../../assets/data/categories.json");
+import CategoryFilter from "./CategoryFilter";
 
 const ProductContainer = () => {
+  const data = require("../../assets/data/products.json");
+  const Categories = require("../../assets/data/categories.json");
   const [products, setProducts] = useState([]);
   const [productsFiltered, setProductsFiltered] = useState([]);
   const [focus, setFocus] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [productsCtg, setProductsCtg] = useState([]);
   const [active, setActive] = useState();
   const [initialState, setInitialState] = useState([]);
 
@@ -33,7 +34,8 @@ const ProductContainer = () => {
     setProducts(data);
     setProductsFiltered(data);
     setFocus(false);
-    setCategories(categories);
+    setProductsCtg(data);
+    setCategories(Categories);
     setActive(-1);
     setInitialState(data);
   }, []); //  [] means run once
@@ -53,16 +55,32 @@ const ProductContainer = () => {
     setFocus(false);
   };
 
+  const handleChangeCtg = (ctg) => {
+    {
+      ctg === "all"
+        ? [setProductsFiltered(initialState), setActive(true)]
+        : [
+            setProductsFiltered(
+              productsCtg.filter((product) => product._id === ctg)
+            ),
+            setActive(true),
+          ];
+    }
+  };
+
   return (
     <NativeBaseProvider>
-      <Input
-        placeholder="Search"
-        variant="filled"
-        height={50}
-        borderRadius={10}
-        onChangeText={(text) => handleSearch(text)}
-        onFocus={openList}
-      />
+      <View style={{ marginLeft: 10 }}>
+        <Input
+          placeholder="Search"
+          variant="filled"
+          width="97%"
+          height={50}
+          borderRadius={10}
+          onChangeText={(text) => handleSearch(text)}
+          onFocus={openList}
+        />
+      </View>
       {/* Icon for close search bar */}
 
       {focus ? (
@@ -85,6 +103,15 @@ const ProductContainer = () => {
       ) : (
         <View style={{ marginTop: 10 }}>
           <Banner />
+          <View>
+            <CategoryFilter
+              categories={categories}
+              categoryFilter={handleChangeCtg}
+              productsCtg={productsCtg}
+              active={active}
+              setActive={setActive}
+            />
+          </View>
           <FlatList
             style={{ marginBottom: 590 }}
             data={products}
