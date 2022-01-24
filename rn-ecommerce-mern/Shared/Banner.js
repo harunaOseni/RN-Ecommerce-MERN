@@ -4,7 +4,7 @@ import Swiper from "react-native-swiper/src";
 
 var { width } = Dimensions.get("window");
 
-const Banner = () => {
+const Banner = ({ productsCtg }) => {
   const [bannerData, setBannerData] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,8 @@ const Banner = () => {
       <View style={styles.container}>
         <View style={styles.swiper}>
           <Swiper
-            style={{ height: 250}}
+            // if productsCtg is greater than 2 height ios 250 else height 20
+            style={productsCtg.length > 2 ? { height: 320 } : { height: 200 }}
             showButtons={false}
             autoplay={true}
             autoplayTimeout={1}
@@ -36,7 +37,7 @@ const Banner = () => {
               );
             })}
           </Swiper>
-          <View style={{ height: 100 }}></View>
+          <View style={{ height: 9 }}></View>
         </View>
       </View>
     </ScrollView>

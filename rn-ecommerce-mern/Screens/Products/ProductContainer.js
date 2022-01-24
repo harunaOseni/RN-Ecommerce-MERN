@@ -101,7 +101,7 @@ const ProductContainer = () => {
         <SearchedProducts productsFiltered={productsFiltered} />
       ) : (
         <View style={{ marginTop: 5 }}>
-          <Banner />
+          <Banner productsCtg={productsCtg} />
           <View>
             <CategoryFilter
               categories={categories}
@@ -112,7 +112,11 @@ const ProductContainer = () => {
             />
           </View>
           <FlatList
-            style={{ marginBottom: 460 }}
+            style={
+              productsCtg.length > 2
+                ? { marginBottom: 490 }
+                : { marginBottom: 0 }
+            }
             data={productsCtg}
             horizontal={false}
             numColumns={2}
