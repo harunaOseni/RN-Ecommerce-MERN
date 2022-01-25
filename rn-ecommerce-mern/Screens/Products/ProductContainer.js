@@ -114,8 +114,8 @@ const ProductContainer = () => {
           <FlatList
             style={
               productsCtg.length > 2
-                ? { marginBottom: 490 }
-                : { marginBottom: 0 }
+                ? { marginBottom: 430 }
+                : { marginBottom: 300 }
             }
             data={productsCtg}
             horizontal={false}
