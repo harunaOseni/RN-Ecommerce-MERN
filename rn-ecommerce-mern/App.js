@@ -11,22 +11,8 @@ LogBox.ignoreAllLogs();
 export default function App() {
   return (
     <NavigationContainer>
-      {/* <View style={styles.container}> */}
-        <Header />
-        {/* <View> */}
-          <Main />
-        {/* </View> */}
-        {/* <StatusBar style="auto" />
-      </View> */}
+      <Header />
+      <Main />
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 const Main = () => {
   return (
     <Tab.Navigator
-      //   initialRouteName="Home"
+      initialRouteName="Home"
       tabBarOptions={{
         keyboardHidesTabBar: true,
         showLabel: false,
@@ -20,7 +20,7 @@ const Main = () => {
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBatIcon: ({ color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon
               name="home"
               style={{ position: "relative" }}
@@ -35,7 +35,7 @@ const Main = () => {
         name="Cart"
         component={HomeNavigator}
         options={{
-          tabBatIcon: ({ color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon
               name="shopping-cart"
               style={{ position: "relative" }}
@@ -50,7 +50,7 @@ const Main = () => {
         name="Admin"
         component={HomeNavigator}
         options={{
-          tabBatIcon: ({ color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon
               name="cog"
               style={{ position: "relative" }}
@@ -66,7 +66,7 @@ const Main = () => {
         name="User"
         component={HomeNavigator}
         options={{
-          tabBatIcon: ({ color }) => (
+          tabBarIcon: ({ color }) => (
             <Icon
               name="user"
               style={{ position: "relative" }}
