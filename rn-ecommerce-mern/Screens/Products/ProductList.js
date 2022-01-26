@@ -4,11 +4,14 @@ import ProductCard from "./ProductCard";
 
 const { width } = Dimensions.get("window");
 
-const ProductList = ({ item }) => {
+const ProductList = ({ item, navigation }) => {
+  const handleNavigateProductDetails = () => {
+    navigation.navigate("Product Detail", { item: item });
+  };
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={handleNavigateProductDetails}>
       <View style={{ width: width / 2, backgroundColor: "gainsboro" }}>
-        <ProductCard item={item}/>
+        <ProductCard item={item} />
       </View>
     </TouchableOpacity>
   );

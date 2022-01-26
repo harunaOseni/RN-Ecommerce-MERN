@@ -9,14 +9,19 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const SearchedProducts = (props) => {
+const SearchedProducts = ({ productsFiltered, navigation }) => {
   const { width } = Dimensions.get("window");
-  const { productsFiltered } = props;
+  const handleNavigateProductDetails = (product) => {
+    navigation.navigate("Product Detail", { item: product });
+  };
   return (
-    <ScrollView style={{ marginTop: 5, marginBottom: 100 }}>
+    <ScrollView style={{ marginTop: 5, marginBottom: 1 }}>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((product) => (
-          <TouchableOpacity key={product.id}>
+          <TouchableOpacity
+            key={product.id}
+            onPress={() => handleNavigateProductDetails(product)}
+          >
             <View style={{ width: width }}>
               <View style={styles.listContainer}>
                 <View>

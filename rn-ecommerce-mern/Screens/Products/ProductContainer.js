@@ -19,7 +19,7 @@ import SearchedProducts from "./SearchedProducts";
 import Banner from "../../Shared/Banner";
 import CategoryFilter from "./CategoryFilter";
 
-const ProductContainer = () => {
+const ProductContainer = ({ navigation }) => {
   const data = require("../../assets/data/products.json");
   const Categories = require("../../assets/data/categories.json");
   const [products, setProducts] = useState([]);
@@ -98,7 +98,10 @@ const ProductContainer = () => {
       ) : null}
 
       {focus ? (
-        <SearchedProducts productsFiltered={productsFiltered} />
+        <SearchedProducts
+          productsFiltered={productsFiltered}
+          navigation={navigation}
+        />
       ) : (
         <View style={{ marginTop: 5 }}>
           <Banner productsCtg={productsCtg} />
@@ -120,7 +123,9 @@ const ProductContainer = () => {
             data={productsCtg}
             horizontal={false}
             numColumns={2}
-            renderItem={({ item }) => <ProductList item={item} key={item.id} />}
+            renderItem={({ item }) => (
+              <ProductList navigation={navigation} item={item} key={item.id} />
+            )}
             keyExtractor={(item) => item.name}
           />
         </View>
