@@ -1,8 +1,4 @@
-import {
-  ADD_TO_CART,
-  REMOVE_FROM_CART,
-  CLEAR_CART,
-} from "../constants/cartitem";
+import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from "../constant";
 
 const cartItems = (state = [], action) => {
   switch (action.type) {
