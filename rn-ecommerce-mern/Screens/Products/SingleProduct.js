@@ -34,22 +34,22 @@ const SingleProduct = ({ route }) => {
         <View style={styles.brandContainer}>
           <Text style={styles.brand}>{item.brand}</Text>
         </View>
-        <View style={styles.priceAddContainer}>
-          <Text
-            style={{
-              fontWeight: "bold",
-              fontSize: 20,
-              color: "red",
-              paddingTop: 5,
-            }}
-          >
-            ${item.price}
-          </Text>
-          <View style={{ paddingBottom: 10 }}>
-            <Button title="Add" />
-          </View>
-        </View>
       </ScrollView>
+      <View style={styles.priceAddContainer}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 20,
+            color: "red",
+            paddingTop: 5,
+          }}
+        >
+          ${item.price}
+        </Text>
+        <View style={{ paddingBottom: 10 }}>
+          <Button title="Add" />
+        </View>
+      </View>
     </NativeBaseProvider>
   );
 };
