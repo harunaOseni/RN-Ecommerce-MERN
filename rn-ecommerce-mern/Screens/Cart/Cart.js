@@ -15,6 +15,7 @@ import * as actions from "../../Redux/Actions/cartActions";
 const { width } = Dimensions.get("window");
 
 const Cart = ({ cartItems }) => {
+  var totalPrice = 0;
   return (
     <NativeBaseProvider>
       {cartItems.length ? (
@@ -45,6 +46,38 @@ const Cart = ({ cartItems }) => {
               );
             })}
           </ScrollView>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              position: "absolute",
+              bottom: -130,
+              padding: 10,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                fontWeight: "bold",
+                paddingTop: 5,
+                color: "red",
+              }}
+            >
+              ${totalPrice.toFixed(2)}
+            </Text>
+            <View
+              style={{
+                justifyContent: "space-around",
+                justifyContent: "flex-end",
+                width: "70%",
+                flexDirection: "row",
+              }}
+            >
+              <Button title="Clear" />
+              <Button title="Checkout" />
+            </View>
+          </View>
         </View>
       ) : (
         <View style={styles.emptyContainer}>
