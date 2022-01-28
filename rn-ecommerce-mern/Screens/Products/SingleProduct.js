@@ -8,8 +8,10 @@ import {
   Button,
 } from "react-native";
 import { Left, Right, Container, H1, NativeBaseProvider } from "native-base";
+import { connect } from "react-redux";
+import * as actions from "../../Redux/Actions/cartActions";
 
-const SingleProduct = ({ route }) => {
+const SingleProduct = ({ route, addItemToCart }) => {
   // route is an object that contains the params that we passed from the previous screen
   const [item, setItem] = useState(route.params.item); // route.params.item is the item that we passed from the previous screen
   const [availability, setAvailability] = useState("");
@@ -47,11 +49,28 @@ const SingleProduct = ({ route }) => {
           ${item.price}
         </Text>
         <View style={{ paddingBottom: 10 }}>
-          <Button title="Add" />
+          <Button
+            title="Add"
+            onPress={() => {
+              addItemToCart(item);
+            }}
+          />
         </View>
       </View>
     </NativeBaseProvider>
   );
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addItemToCart: (product) =>
+      dispatch(
+        actions.addToCart({
+          quantity: 1,
+          product: product,
+        })
+      ),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -87,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SingleProduct;
+export default connect(null, mapDispatchToProps)(SingleProduct);
