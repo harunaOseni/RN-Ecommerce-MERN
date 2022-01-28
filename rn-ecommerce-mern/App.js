@@ -4,15 +4,19 @@ import ProductContainer from "./Screens/Products/ProductContainer";
 import { NavigationContainer } from "@react-navigation/native";
 import Header from "./Shared/Header";
 import Main from "./Navigators/Main";
+import { Provider } from "react-redux";
+import store from "./Redux/store";
 
 LogBox.ignoreLogs(["Warning: ..."]);
 LogBox.ignoreAllLogs();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Header />
-      <Main/>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <Header />
+        <Main />
+      </NavigationContainer>
+    </Provider>
   );
 }
