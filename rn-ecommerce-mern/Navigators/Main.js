@@ -45,6 +45,7 @@ const Main = () => {
                 style={{ position: "relative" }}
                 color={color}
                 size={30}
+                style={{paddingTop: 7}}
               />
               <CartIcon />
             </NativeBaseProvider>

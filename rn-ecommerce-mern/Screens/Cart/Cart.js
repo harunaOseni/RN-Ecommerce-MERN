@@ -11,6 +11,8 @@ import {
 import { Text, NativeBaseProvider } from "native-base";
 import { connect } from "react-redux";
 import * as actions from "../../Redux/Actions/cartActions";
+import { SwipeListView } from "react-native-swipe-list-view";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const { width } = Dimensions.get("window");
 
@@ -25,30 +27,49 @@ const Cart = ({ cartItems, navigation, clearCart }) => {
   return (
     <NativeBaseProvider>
       {cartItems.length ? (
-        <View style={{ height: "100%" }}>
+        <View style={{ height: "100%", backgroundColor: "white" }}>
           <Text style={styles.title}>Cart</Text>
           <ScrollView>
             {cartItems.map((item) => {
               return (
-                <TouchableOpacity style={styles.container}>
-                  <View>
-                    <Image
-                      source={{
-                        uri: item.product.image
-                          ? item.product.image
-                          : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
-                      }}
-                      resizeMode="contain"
-                      style={styles.image}
-                    />
-                  </View>
-                  <View style={styles.subContainer}>
-                    <Text style={styles.productName}>{item.product.name}</Text>
-                    <Text style={styles.price}>
-                      ${item.product.price.toFixed(2)}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
+                <SwipeListView
+                  data={cartItems}
+                  renderItem={({ item }) => (
+                    <View style={styles.container}>
+                      <View>
+                        <Image
+                          source={{
+                            uri: item.product.image
+                              ? item.product.image
+                              : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
+                          }}
+                          resizeMode="contain"
+                          style={styles.image}
+                        />
+                      </View>
+                      <View style={styles.subContainer}>
+                        <Text style={styles.productName}>
+                          {item.product.name}
+                        </Text>
+                        <Text style={styles.price}>
+                          ${item.product.price.toFixed(2)}
+                        </Text>
+                      </View>
+                    </View>
+                  )}
+                  renderHiddenItem={({ item }) => (
+                    <View style={styles.hiddenContainer}>
+                      <TouchableOpacity style={styles.hiddenButton}>
+                        <Icon name="trash" color={"white"} size={30} />
+                      </TouchableOpacity>
+                    </View>
+                  )}
+                  disableRightswipe={true}
+                  previewOpenLay={3000}
+                  friction={40}
+                  stopLeftSwipe={75}
+                  rightOpenValue={-75}
+                />
               );
             })}
           </ScrollView>
@@ -129,6 +150,7 @@ const styles = StyleSheet.create({
     padding: 10,
     width: "100%",
     justifyContent: "space-between",
+    backgroundColor: "#eee",
   },
   image: {
     width: 100,
@@ -150,6 +172,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
   },
+  hiddenContainer: {
+      flex: 1, 
+      justifyContent: "flex-end",
+      flexDirection: "row",
+  }, 
+  hiddenButton: {
+    backgroundColor: "red",
+    justifyContent: "center",
+    alignItems: "flex-end", 
+    paddingRight: 25,
+    width: width / 1.2 
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

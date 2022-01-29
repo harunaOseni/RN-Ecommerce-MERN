@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     position: "relative",
     top: -3,
-    right: -45,
+    right: -46,
   },
 });
 
