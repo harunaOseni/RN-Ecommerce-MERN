@@ -14,15 +14,18 @@ import * as actions from "../../Redux/Actions/cartActions";
 
 const { width } = Dimensions.get("window");
 
-const Cart = ({ cartItems, navigation }) => {
+const Cart = ({ cartItems, navigation, clearCart }) => {
   var totalPrice = 0;
   cartItems.forEach((item) => {
     totalPrice += item.quantity * item.product.price;
   });
+  const handleClearCart = () => {
+    clearCart();
+  };
   return (
     <NativeBaseProvider>
       {cartItems.length ? (
-        <View style={{height: "100%"}}>
+        <View style={{ height: "100%" }}>
           <Text style={styles.title}>Cart</Text>
           <ScrollView>
             {cartItems.map((item) => {
@@ -55,7 +58,7 @@ const Cart = ({ cartItems, navigation }) => {
               flexDirection: "row",
               justifyContent: "space-between",
               position: "relative",
-              bottom: 0
+              bottom: 0,
             }}
           >
             <Text
@@ -76,7 +79,7 @@ const Cart = ({ cartItems, navigation }) => {
                 flexDirection: "row",
               }}
             >
-              <Button title="Clear" />
+              <Button title="Clear" onPress={handleClearCart} />
               <Button
                 title="Checkout"
                 onPress={() => {
@@ -99,6 +102,12 @@ const Cart = ({ cartItems, navigation }) => {
 const mapStateToProps = (state) => {
   return {
     cartItems: state.cartItems,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    clearCart: () => dispatch(actions.clearCart()),
   };
 };
 
@@ -143,5 +152,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 // export default Cart;
