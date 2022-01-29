@@ -14,12 +14,15 @@ import * as actions from "../../Redux/Actions/cartActions";
 
 const { width } = Dimensions.get("window");
 
-const Cart = ({ cartItems }) => {
+const Cart = ({ cartItems, navigation }) => {
   var totalPrice = 0;
+  cartItems.forEach((item) => {
+    totalPrice += item.quantity * item.product.price;
+  });
   return (
     <NativeBaseProvider>
       {cartItems.length ? (
-        <View>
+        <View style={{height: "100%"}}>
           <Text style={styles.title}>Cart</Text>
           <ScrollView>
             {cartItems.map((item) => {
@@ -51,9 +54,8 @@ const Cart = ({ cartItems }) => {
               width: "100%",
               flexDirection: "row",
               justifyContent: "space-between",
-              position: "absolute",
-              bottom: -130,
-              padding: 10,
+              position: "relative",
+              bottom: 0
             }}
           >
             <Text
@@ -75,7 +77,12 @@ const Cart = ({ cartItems }) => {
               }}
             >
               <Button title="Clear" />
-              <Button title="Checkout" />
+              <Button
+                title="Checkout"
+                onPress={() => {
+                  navigation.navigate("Checkout");
+                }}
+              />
             </View>
           </View>
         </View>
