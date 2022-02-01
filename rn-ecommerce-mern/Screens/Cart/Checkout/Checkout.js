@@ -26,6 +26,7 @@ const Checkout = ({ cartItems, navigation }) => {
           borderRadius: 7,
           paddingTop: 5,
           paddingBottom: 5,
+          backgroundColor: "white",
         },
       },
     },
@@ -118,7 +119,7 @@ const Checkout = ({ cartItems, navigation }) => {
         </FormContainer>
       </KeyboardAwareScrollView>
       <Box alignItems="center" ml={200} mb={3} mt={3}>
-        <Button onPress={() => handleCheckout} size="lg">
+        <Button onPress={handleCheckout} size="lg">
           Confirm
         </Button>
       </Box>
