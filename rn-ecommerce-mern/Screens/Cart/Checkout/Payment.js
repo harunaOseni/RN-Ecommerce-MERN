@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Dimensions } from "react-native";
 import {
   Text,
   Container,
@@ -12,6 +12,8 @@ import {
   Button,
 } from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome";
+
+const { width } = Dimensions.get("window");
 
 const Payment = ({ route, navigation }) => {
   const order = route.params;
@@ -59,7 +61,9 @@ const Payment = ({ route, navigation }) => {
   return (
     <NativeBaseProvider theme={theme}>
       <Container>
-        <Heading>Choose your payment method</Heading>
+        <Heading style={{ width: width, textAlign: "center" }}>
+          Choose your payment method
+        </Heading>
         <Radio.Group
           name="paymentMethod"
           value={method}
@@ -104,7 +108,7 @@ const Payment = ({ route, navigation }) => {
           ))}
         </Select>
       </Container>
-      <Box alignItems="center" ml={250} mb={3} mt={155}>
+      <Box alignItems="center" ml={270} mb={3} mt={185}>
         <Button onPress={handlePayment} size="lg">
           Confirm
         </Button>

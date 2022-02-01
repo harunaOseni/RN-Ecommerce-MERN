@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMLjz9oNdnLXV0Q54FboHbViJeUQYOn5k8eNhta60EoE5Li9eayyv-UVtHow692YI4tBE&usqp=CAU",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
